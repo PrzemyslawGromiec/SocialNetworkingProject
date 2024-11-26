@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socius</title>
+    <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+
+  <header>
+    <h2 class="logo">SOCIUS</h2>
+    <nav class="navigation">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <button id="loginButton" class="btnLogin">Login</button>
+    </nav>
+  </header>
+
+  <div id="modalOverlay" class="modal-overlay"></div>
+
+  <!-- Wrapper for all content -->
+  <div class="wrapper">
+    <!-- Login Section -->
+    <div id="loginSection" class="content-section active login">
+      <h2>Login</h2>
+      <div id="loginError" class="error-message"></div>
+      <div class="input-box">
+        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+        <input type="text" id="loginEmail" placeholder="Email">
+        <span id="loginEmailError"></span>
+      </div>
+      <div class="input-box">
+        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+        <input type="password" id="loginPassword" placeholder="Password">
+        <span id="loginPasswordError"></span>
+      </div>
+      <button id="loginSubmit" class="btn">Login</button>
+      <div class="login-register">
+        <p>Don't have an account? <a href="#" id="switchToRegister">Register</a></p>
+      </div>
+    </div>
+
+    <!-- Registration Section -->
+    <div id="registerSection" class="content-section">
+      <h2>Registration</h2>
+      <div id="registrationError" class="error-message"></div>
+      <div class="input-box">
+        <span class="icon"><ion-icon name="person"></ion-icon></span>
+        <input type="text" id="username" placeholder="Username">
+        <span id="usernameError"></span>
+      </div>
+      <div class="input-box">
+        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+        <input type="text" id="email" placeholder="Email">
+        <span id="emailError"></span>
+      </div>
+      <div class="input-box">
+        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+        <input type="password" id="password" placeholder="Password">
+        <span id="passwordError"></span>
+      </div>
+      <button id="registerSubmit" class="btn">Register</button>
+      <div class="login-register">
+        <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+      </div>
+    </div>
+
+    <!-- Feed Section -->
+    <div id="feedSection" class="content-section">
+      <h1>Welcome to Your Feed</h1>
+      <p id="welcomeMessage">Hello, <span id="usernameDisplay">User</span>! Heres what’s happening:</p>
+    
+
+      <div id="postModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Create a Post</h2>
+          <textarea id="postContent" rows="5" placeholder="What's on your mind?"></textarea>
+          <button id="submitPost" class="btn">Post</button>
+        </div>
+      </div>
+
+      <button id="createPostButton" class="btn">Create Post</button>
+      <div id="feed"></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/JavaScript/validation.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
