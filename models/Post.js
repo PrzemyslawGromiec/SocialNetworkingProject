@@ -8,6 +8,7 @@ export default class Post {
     async createPost({ userId, content }) {
         const newPost = {
             userId: (userId),
+            userId,
             content,
             createdAt: new Date()
         };

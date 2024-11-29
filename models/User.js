@@ -34,7 +34,20 @@ export default class User {
     }
 
     async getAllUsers() {
-        return await this.collection.find({}).toArray();
+        const users = await this.collection.find({
+            username: { $exists: true }, 
+            email: { $exists: true }, 
+            password: { $exists: true }
+        }).toArray();
+
+        return users.map(user => {
+            return {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                createdAt: user.createdAt
+            };
+        });
     }
 
     async deleteUser(id) {
@@ -49,4 +62,24 @@ export default class User {
             throw new Error(`Failed to delete user: ${error.message}`);
         }
     }
+
+    async deleteUserByEmail(email) {
+        try {
+            const result = await this.collection.deleteOne({ email });
+            return result;
+        } catch (error) {
+            throw new Error(`Failed to delete user by email: ${error.message}`);
+        }
+    }
+
+    async deleteAllUsers() {
+        try {
+            const result = await this.collection.deleteMany({});
+            return result;
+        } catch (error) {
+            throw new Error(`Failed to delete all users: ${error.message}`);
+        }
+    }
+    
+
 }

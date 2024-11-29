@@ -1,8 +1,10 @@
 import Post from '../models/Post.js';
 
 export const createPost = async (req, res, collection) => {
-    const { userId } = req.params;
-    const { content } = req.body;
+    const userId = req.user?.id;
+    // const { userId } = req.params;
+    // const { content } = req.body;
+    const { content } = req.body; 
 
     if (!content) {
         return res.status(400).json({ error: 'Content is required' });
@@ -19,11 +21,12 @@ export const createPost = async (req, res, collection) => {
 
 export const getPostsByUserId = async (req, res, collection) => {
     const { userId } = req.params;
+    console.log("userId from request:", userId);
 
-    console.log('Requested userId:', userId);
     try {
         const postModel = new Post(collection);
         const posts = await postModel.getPostsByUserId(userId);
+        console.log("Posts found:", posts);
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({ error: error.message });

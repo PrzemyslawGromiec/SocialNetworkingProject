@@ -35,6 +35,13 @@ header {
     user-select: none;
 }
 
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
 .navigation a {
     position: relative;
     font-size: 1.5em;
@@ -95,8 +102,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* overflow: hidden; */
-    overflow: visible;
     transition: height .5 ease, transform .5s ease;
 }
 
@@ -287,16 +292,28 @@ header {
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1.5);
 }
+
 .modal-overlay {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 1%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-overlay.show {
     display: block;
+}
+
+#feed {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid teal;
+}
+
+.content-section.active .feed .post p {
+    background-color: aquamarine;
 }
