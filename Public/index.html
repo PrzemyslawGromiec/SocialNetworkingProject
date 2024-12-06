@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socius</title>
-    <link rel="stylesheet" href="/CSS/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socius</title>
+  <link rel="stylesheet" href="/CSS/style.css">
 </head>
+
 <body>
 
   <header>
@@ -22,6 +24,7 @@
 
   <!-- Wrapper for all content -->
   <div class="wrapper">
+
     <!-- Login Section -->
     <div id="loginSection" class="content-section active login">
       <h2>Login</h2>
@@ -68,10 +71,9 @@
     </div>
 
     <!-- Feed Section -->
-    <div id="feedSection" class="content-section">
+    <div id="feedSection" class="content-section feedScale">
       <h1>Welcome to Your Feed</h1>
       <p id="welcomeMessage">Hello, <span id="usernameDisplay">User</span>! Heres what’s happening:</p>
-    
 
       <div id="postModal" class="modal">
         <div class="modal-content">
@@ -84,8 +86,38 @@
 
       <button id="createPostButton" class="btn">Create Post</button>
       <div id="feed" class="feed"></div>
+
+      <!-- bar under the feed with icon buttons -->
+      <div id="userSearchModal" class="">
+        <div class="modal-content">
+          <div class="user-search">
+            <!-- <input type="text" id="userSearchInput" placeholder="Search for users..."> -->
+            <span class="icon"></span>
+            <button id="userFollowButton" class="btn follow">
+              <ion-icon name="person-add"></ion-icon>
+            </button>
+            <button id="userSearchButton" class="btn follow">
+              <ion-icon name="search"></ion-icon>
+            </button>
+          </div>
+          <!-- Search Results -->
+          <div id="userSearchResults"></div>
+        </div>
+      </div>
+
+      <div id="followModal" class="modal follow">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 class="modal-title">Who do you want to follow?</h2>
+          <textarea id="postContent" rows="2" placeholder="Search user"></textarea>
+          <button id="followSearch" class="btn">Search</button>
+        </div>
+      </div>
+
     </div>
   </div>
+
+
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="/JavaScript/validation.js"></script>
@@ -93,4 +125,5 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </body>
+
 </html>

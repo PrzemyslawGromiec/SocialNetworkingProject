@@ -56,6 +56,17 @@ function getAuthHeaders() {
     };
 }
 
+function toggleWrapperScale(sectionId) {
+    const wrapper = document.querySelector('.wrapper');
+    const newSection = document.getElementById(sectionId);
+
+    if (newSection.classList.contains('feedScale')) {
+        wrapper.classList.add('scaled');
+    } else {
+        wrapper.classList.remove('scaled');
+    }
+}
+
 $(() => {
 
     function updateNavbarButtons() {
@@ -69,10 +80,17 @@ $(() => {
         }
     }
 
-    function showSection(sectionId, additionalHeight = 0) {
+    function showSection(sectionId) {
         const wrapper = document.querySelector('.wrapper');
         const activeSection = document.querySelector('.content-section.active');
+        // const activeSection = document.querySelectorAll('.content-section.active');
         const newSection = document.getElementById(sectionId);
+
+        if (newSection.id === 'feedSection') {
+            wrapper.classList.add('scaled');
+        } else {
+            wrapper.classList.remove('scaled');
+        }
     
         if (activeSection && activeSection !== newSection) {
             activeSection.classList.remove('active');
@@ -81,34 +99,23 @@ $(() => {
             // Wait for the transition to complete before removing the hidden class
             setTimeout(() => {
                 activeSection.classList.remove('hidden');
-            }, 500);
+            }, 50);
         }
+
+        // activeSection.forEach(section => {
+        //     if (section.id !== 'feedSection' && section.id !== 'userSearchModal') {
+        //         console.log(section.id);
+        //         section.classList.remove('active');
+        //         section.classList.add('hidden');
+        //         // Wait for the transition to complete before removing the hidden class
+        //         setTimeout(() => {
+        //             section.classList.remove('hidden');
+        //         }, 50);
+        //     }
+        // })
     
         newSection.classList.add('active');
-    
-        // Adjust the wrapper height dynamically
-        adjustWrapperHeight(sectionId, additionalHeight);
-    }
-
-    
-    function adjustWrapperHeight(sectionId, additionalHeight = 0) {
-        const wrapper = document.querySelector('.wrapper');
-        const activeContent = document.getElementById(sectionId);
-    
-        // Measure the height of the active content
-        const contentHeight = activeContent.scrollHeight;
-    
-        // Set the wrapper height to match the active content plus additionalHeight
-        wrapper.style.height = `${contentHeight + additionalHeight}px`;
-    }
-
-    function adjustFeedHeight() {
-        const feedContainer = document.getElementById('feed');
-        const wrapper = document.querySelector('.wrapper');
-    
-        const feedHeight = feedContainer.scrollHeight;
-    
-        wrapper.style.height = `${feedHeight + 20}px`;
+        toggleWrapperScale(sectionId);
     }
 
     function checkLoginStatus() {
@@ -149,6 +156,7 @@ $(() => {
             sessionStorage.clear(); 
             updateNavbarButtons();
             showSection('loginSection');
+            // $('#feedSection').removeClass('active').addClass('hidden');
             return;
         }
     
@@ -162,6 +170,8 @@ $(() => {
                 sessionStorage.clear();
                 updateNavbarButtons();
                 showSection('loginSection');
+                // $('#feedSection').removeClass('active').addClass('hidden');
+                console.log('Logging out user');
             },
             error: function () {
                 alert('Failed to log out. Please try again.');
@@ -171,12 +181,12 @@ $(() => {
 
     // Switch between login and registration
     $('#switchToRegister').on('click',function () {
-        showSection('registerSection',0);
+        showSection('registerSection');
     });
 
 
     $('#switchToLogin').on('click',function () {
-        showSection('loginSection',0);
+        showSection('loginSection');
     });
 
     $('#username').on('blur input', function () {
@@ -226,7 +236,8 @@ $(() => {
                 sessionStorage.setItem('authToken', response.token); 
                 sessionStorage.setItem('userId', response.userId);
                 updateNavbarButtons();
-                showSection('feedSection',20);
+                showSection('feedSection');
+                showSection('userSearchModal');
             },
             error: function (xhr) {
                 $('#registrationError').text(xhr.responseJSON?.error || 'Registration failed. Please try again.');
@@ -272,12 +283,24 @@ $(() => {
     });
 
     $('#createPostButton').on('click', function () {
+        console.log('button clicked');
         $('#postModal').addClass('show');
+        $('#modalOverlay').addClass('show');
+    });
+
+    $('#userFollowButton').on('click', function() {
+        console.log('button clicked');
+        $('#followModal').addClass('show');
         $('#modalOverlay').addClass('show');
     });
     
     $('.close').on('click', function () {
         $('#postModal').removeClass('show');
+        $('#modalOverlay').removeClass('show');
+    });
+
+    $('.close').on('click', function () {
+        $('#followModal').removeClass('show');
         $('#modalOverlay').removeClass('show');
     });
 
@@ -319,10 +342,6 @@ $(() => {
                 alert(xhr.responseJSON?.error || "Failed to create post. Please try again.");
             }
         });
-    });
-
-    $('#feedSection').on('show', function () {
-        loadUserPosts();
     });
 
     function loadUserPosts(userId) {

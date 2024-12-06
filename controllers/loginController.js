@@ -32,7 +32,8 @@ export async function loginUser(req, res, collection) {
         res.status(200).json({
             message: 'Login successful',
             token,
-            userId: user._id
+            userId: user._id,
+            username: user.username
          });
     } catch (error) {
         console.error("Error during login:", error.message);
